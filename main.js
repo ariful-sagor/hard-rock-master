@@ -1,8 +1,10 @@
+// Block display results
 const searchResult = document.querySelector(".search-result");
 searchResult.style.display = "none";
 
 const singleLyrics = document.getElementById("single-lyrics");
 singleLyrics.style.display = "none";
+
 
 const searchValue = document.querySelector(".form-control");
 const searchButton = document.querySelector(".search-btn");
@@ -11,10 +13,12 @@ const lyrics = document.getElementById("lyrics");
 const songName = document.getElementById("Song");
 const album = document.getElementById("Album");
 
+// Catch click on Search Button
 searchButton.addEventListener("click", function () {
   console.log(searchValue.value);
   searchResult.style.display = "block";
-  fetch(`https://api.lyrics.ovh/suggest/${searchValue.value}`)
+  // fetch different link for different search
+  fetch(`https://api.lyrics.ovh/suggest/${searchValue.value}`) 
     .then((res) => res.json())
     .then((data) => {
       for (let i = 0; i < 10; i++) {
@@ -26,10 +30,11 @@ searchButton.addEventListener("click", function () {
         x[i].innerHTML = data.data[i].title;
         y[i].innerHTML = data.data[i].artist.name;
         z[i].innerHTML = data.data[i].duration;
-
+ // for Lyrics
         const lyricsButton = document.querySelectorAll(".lyrics-button");
         lyricsButton[i].addEventListener("click", function () {
           console.log("clicked");
+         
           fetch(
             `https://api.lyrics.ovh/v1/${data.data[i].artist.name}/${data.data[i].title}`
           )
